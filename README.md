@@ -7,4 +7,8 @@ Deixei a estrutura clean, removendo as configurações padrão que não seria ut
 #Utilizo os hooks do useStates e o useEffect para o comportamento do componente.
 #Foi criado um componente para a api, para ter acesso as recursos como  o get, post da api.
 
-[!img][https://github.com/yasuhei/Pokedex/blob/main/pokedex.jpeg]
+![image](https://github.com/yasuhei/Pokedex/blob/main/pokedex.jpeg)
+
+
+
+
