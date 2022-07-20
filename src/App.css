@@ -8,3 +8,8 @@
   text-align: center;
 }
 
+.notfound {
+  text-align: center;
+  font-size:1.12rem;
+  padding: 20px;
+}
