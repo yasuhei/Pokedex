@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPokemon, getPokemonData } from "./api";
+import { getPokemon, getPokemonData, searchPokemon } from "./api";
 import { FavoriteProvider } from "./components/Context";
 import Navbar from "./components/NavBar/Navbar";
 import Pokedex from "./components/Pokedex";
@@ -9,6 +9,7 @@ import Search from "./components/Search/Index";
 
 function App() {
   const [loading, setLoading] = useState(false)
+  const [notFound, setNotFound] = useState(false)
   const [pokemon, setPokemon] = useState([])
   const [page, setPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
@@ -21,6 +22,7 @@ function App() {
   const fetchPokemon = async () => {
     try {
       setLoading(true)
+      setNotFound(false)
       const data = await getPokemon(itensPerPage, itensPerPage * page)
       const promises = data.results.map(async (pokemon) => {
         return await getPokemonData(pokemon.url)
@@ -36,7 +38,7 @@ function App() {
     }
   }
 const  loadFavoritePokemon = () => {
-  const pokemons = JSON.parse(window.localStorage.getItem(favoriteKey))
+  const pokemons = JSON.parse(window.localStorage.getItem(favoriteKey)) || []
   setFavorites(pokemons)
 }
   useEffect( () => {
@@ -57,7 +59,7 @@ loadFavoritePokemon()
   const updateFavorites = [...favorites]
   const favoriteIndex = favorites.indexOf(name)
   if(favoriteIndex >= 0) {
-    updateFavorites.slice(favoriteIndex, 1)
+    updateFavorites.splice(favoriteIndex, 1)
   } else {
     updateFavorites.push(name)
 
@@ -66,6 +68,26 @@ loadFavoritePokemon()
   setFavorites(updateFavorites)
   }
 
+  const onSearchHandler = async (pokemon) => {
+    if(!pokemon) {
+      return fetchPokemon()
+    }
+    setLoading(true)
+    setNotFound(false)
+
+    const result = await searchPokemon(pokemon)
+    if(!result) {
+      setLoading(false)
+      setNotFound(true)
+    } else {
+      setPokemon([result])
+      setPage(0)
+      setTotalPages(1)
+
+    }
+    setLoading(false)
+
+  }
   return (
     <FavoriteProvider
     value={{favoritePokemon:favorites, 
@@ -73,15 +95,18 @@ loadFavoritePokemon()
     >
     <>
     <Navbar />
-    <Search />
-    <Pokedex
+    <Search onSearch={onSearchHandler} />
+    {notFound ? (
+      <div className="notfound"> Pokemon nao encontrado</div>
+    ) :
+    (<Pokedex
       pokemon={pokemon}
      loading={ loading} 
      page={page} 
      totalPages={totalPages}
      setPage={setPage}
 
-     />
+     />)}
     </>
     </FavoriteProvider>
   );

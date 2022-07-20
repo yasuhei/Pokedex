@@ -34,7 +34,7 @@ const Pokedex = (props) => {
             </div>
             {loading ? 
            (
-           <div>Teste</div> ) : (<div className='pokedex_grid'>
+           <div>Carregando ...</div> ) : (<div className='pokedex_grid'>
              {pokemon && pokemon.map((pokemon, index) => {
 
                 
