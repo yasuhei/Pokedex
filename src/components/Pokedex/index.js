@@ -39,7 +39,7 @@ const Pokedex = (props) => {
 
                 
                 return(
-                    <Pokemon key={index} pokemon={pokemon}/>
+                    <Pokemon key={index} pokemon={pokemon} />
                 )
             } )}
            </div>) 

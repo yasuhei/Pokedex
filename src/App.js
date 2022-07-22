@@ -27,11 +27,18 @@ function App() {
       const promises = data.results.map(async (pokemon) => {
         return await getPokemonData(pokemon.url)
       })
+  
+      
       const results = await Promise.all(promises)
       setPokemon(results)
+
+      const local = results.map( (local) => 
+      local.location_area_encounters)
+        
+
       setLoading(false)
       setTotalPages(Math.ceil(data.count / itensPerPage))
-
+      console.log(results)
 
     } catch (err) {
       console.error(err)

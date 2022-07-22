@@ -13,16 +13,23 @@ const Pokemon = (props) => {
     return (
         
         <div className="card-pokemon">
-            <div className="card-imag-container">
-                <img className="pokemon-img" 
-                 src={pokemon.sprites.front_default}
-                  alt={pokemon.name} 
-                  />
-            </div>
+            {/* <div className="card-imag-container"> */}
+
+            {/* </div> */}
             <div className="card-body">
             <div className="card-top">
                 <h3>{pokemon.name}</h3>
                 <div>#{pokemon.id}</div>
+                <p>XP{pokemon.base_experience}</p>
+
+                {/* <p>{pokemon.stat.map((s) => s.name)}</p> */}
+            </div>
+
+            <div className="pokemon-img">
+            <img 
+                 alt={pokemon.name} src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.name}.gif`}
+                  />
+
             </div>
 
             <div className="card-bottom">
