@@ -55,8 +55,6 @@ loadFavoritePokemon()
   
 
   useEffect( () => {
-    console.log("carregou")
-
     fetchPokemon()
 
   },[page])
